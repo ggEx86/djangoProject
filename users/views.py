@@ -4,6 +4,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
+def edit_profile(request):
+    return render(request, 'users/edit_profile.html')
+
+
 def register(request):
     if request.method == 'POST':
         creation_form = UserRegisterForm(request.POST)
