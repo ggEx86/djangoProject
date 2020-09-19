@@ -5,7 +5,8 @@
         <div class="media">
             <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
             <div class="media-body">
-                <h2 class="account-heading">{{ user.username }} // {{ user.profile.name }}</h2>
+                <h2 class="account-heading">{{ user.first_name }} {{ user.last_name }} // {{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
                 <p class="text-secondary">{{ user.profile.bio_desc }}</p>
             </div>
         </div>
