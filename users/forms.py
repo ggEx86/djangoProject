@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
+from blog.models import Post
 
 
 class UserRegisterForm(UserCreationForm):
@@ -24,3 +25,9 @@ class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image', 'bio_desc']
+
+
+class UserCreatePost(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']

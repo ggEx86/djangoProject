@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserEditForm, ProfileEditForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
+from blog.models import Post
+from django.contrib.auth.models import User
 
 def edit_profile(request):
     return render(request, 'users/edit_profile.html')
@@ -24,7 +24,13 @@ def register(request):
 
 @login_required
 def profile(request):
-    return render(request, 'users/profile.html')
+    # Profile create post view\
+
+    context = {
+        'posts': Post.objects.filter(author = request.user)
+    }
+
+    return render(request, 'users/profile.html', context)
 
 
 @login_required
