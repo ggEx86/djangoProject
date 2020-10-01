@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from blog.models import Post
 from django.contrib.auth.models import User
+from django.views.generic import DetailView
+
 
 def edit_profile(request):
     return render(request, 'users/edit_profile.html')
@@ -24,12 +26,21 @@ def register(request):
 
 @login_required
 def profile(request):
-    # Profile create post view\
-
+    # Profile create post view
     context = {
-        'posts': Post.objects.filter(author = request.user)
+        'posts': Post.objects.filter(author=request.user)
     }
 
+    return render(request, 'users/profile.html', context)
+
+
+@login_required
+def ext_profile(request, username):
+    post_author = User.objects.get(username=username)
+    context = {
+        'posts': Post.objects.filter(author=post_author),
+        'user': User.objects.get(username=username)
+    }
     return render(request, 'users/profile.html', context)
 
 
