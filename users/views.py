@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from blog.models import Post
 from django.contrib.auth.models import User
 from django.views.generic import DetailView
+from django.core.paginator import Paginator
 
 
 def edit_profile(request):
@@ -37,9 +38,15 @@ def profile(request):
 @login_required
 def ext_profile(request, username):
     post_author = User.objects.get(username=username)
+    users_posts = Post.objects.filter(author=post_author).order_by('-date_posted')
+    paginator = Paginator(users_posts, 5)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'posts': Post.objects.filter(author=post_author),
-        'user': User.objects.get(username=username)
+        'posts': users_posts,
+        'user': post_author,
+        'page_obj': page_obj
     }
     return render(request, 'users/profile.html', context)
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Post
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from django.core.paginator import Paginator
 
 # def home(request):
 #     context = {
@@ -17,6 +17,7 @@ class PostListView(ListView):
     template_name = 'blog/home.html'
     context_object_name = 'posts'
     ordering = ['-date_posted']
+    paginate_by = 6
 
 
 class CreatePostView(LoginRequiredMixin, CreateView):
