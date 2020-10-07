@@ -27,27 +27,15 @@ def register(request):
 
 @login_required
 def profile(request):
-    # Profile create post view
-    context = {
-        'posts': Post.objects.filter(author=request.user)
-    }
-
-    return render(request, 'users/profile.html', context)
-
-
-@login_required
-def ext_profile(request, username):
-    post_author = User.objects.get(username=username)
-    users_posts = Post.objects.filter(author=post_author).order_by('-date_posted')
-    paginator = Paginator(users_posts, 5)
-
+    post_list = Post.objects.filter(author=request.user)
+    paginator = Paginator(post_list, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+
     context = {
-        'posts': users_posts,
-        'user': post_author,
         'page_obj': page_obj
     }
+
     return render(request, 'users/profile.html', context)
 
 

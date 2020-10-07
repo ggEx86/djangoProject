@@ -19,7 +19,7 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from blog import views as blog_views
 
 urlpatterns = [
     path('', include('blog.urls')),
@@ -29,5 +29,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout_user'),
     path('profile/', user_views.profile, name='user_profile'),
     path('edit-profile/', user_views.edit_profile, name='user_edit_profile'),
-    path('user/<str:username>', user_views.ext_profile, name='user_view_ext_profile')
+    path('user/<str:username>', blog_views.UserPostListView.as_view(), name='user_view_ext_profile')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
